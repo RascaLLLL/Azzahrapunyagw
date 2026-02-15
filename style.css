@@ -1,4 +1,4 @@
-/* style.css - FIXED MOBILE SCROLL VERSION */
+/* style.css - FIT SCREEN VERSION */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;500;600&family=Delius&family=Indie+Flower&display=swap');
 
 :root {
@@ -12,27 +12,26 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Mencegah highlight biru saat tap di mobile */
-    -webkit-tap-highlight-color: transparent; 
+    -webkit-tap-highlight-color: transparent;
 }
 
+/* KUNCI 1: Lock Layar Utama */
 body {
     font-family: 'Poppins', sans-serif;
     background: var(--bg-pink-soft);
-    /* KUNCI ANTI SCROLL 2 JARI: */
-    position: fixed; 
+    position: fixed; /* Layar gak bisa digeser */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; 
+    overflow: hidden;
     color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* --- BACKGROUND DECORATION --- */
+/* --- BACKGROUND --- */
 .bg-doodles {
     position: fixed;
     top: 0;
@@ -57,254 +56,79 @@ body {
     z-index: -2;
 }
 
-.bg-blobs {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: -4;
-    pointer-events: none;
-}
-
-.blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.6;
-    animation: moveBlob 20s infinite alternate;
-}
-
+.bg-blobs { position: fixed; width: 100%; height: 100%; z-index: -4; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: moveBlob 20s infinite alternate; }
 .b1 { width: 400px; height: 400px; background: #ffc3a0; top: -100px; left: -100px; }
 .b2 { width: 350px; height: 350px; background: #ffafbd; bottom: -50px; right: -50px; }
 
-@keyframes moveBlob {
-    from { transform: translate(0, 0); }
-    to { transform: translate(30px, 50px); }
-}
+@keyframes moveBlob { from { transform: translate(0, 0); } to { transform: translate(30px, 50px); } }
+@keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
 
-@keyframes floatUp {
-    0% { transform: translateY(100vh) scale(0); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-}
-
-/* --- LOGIN SYSTEM --- */
+/* --- LOGIN --- */
 #login-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(15px);
-    transition: opacity 0.8s ease;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 100; display: flex; justify-content: center; align-items: center;
+    backdrop-filter: blur(15px); transition: opacity 0.8s ease;
 }
-
 .login-card {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border: 1px solid white;
-    width: 90%;
-    max-width: 400px;
+    background: rgba(255, 255, 255, 0.7); padding: 40px; border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); text-align: center; border: 1px solid white; width: 90%; max-width: 400px;
 }
-
 .pin-input {
-    width: 100%;
-    padding: 15px;
-    margin: 20px 0;
-    border: 2px solid rgba(214, 51, 132, 0.3);
-    border-radius: 10px;
-    font-size: 1.5rem;
-    text-align: center;
-    letter-spacing: 5px;
-    color: var(--primary);
-    outline: none;
-    background: rgba(255, 255, 255, 0.9);
+    width: 100%; padding: 15px; margin: 20px 0; border: 2px solid rgba(214, 51, 132, 0.3);
+    border-radius: 10px; font-size: 1.5rem; text-align: center; letter-spacing: 5px; color: var(--primary);
+    outline: none; background: rgba(255, 255, 255, 0.9);
 }
-
 .btn-unlock {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    width: 100%;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
+    background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 50px;
+    width: 100%; cursor: pointer; font-weight: bold; transition: 0.3s;
 }
+.shake { animation: shake 0.3s ease-in-out; border-color: red !important; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-10px); } 50% { transform: translateX(10px); } }
 
-.shake {
-    animation: shake 0.3s ease-in-out;
-    border-color: red !important;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25%, 75% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-}
-
-/* --- MAIN CONTAINER (GLASS) --- */
+/* --- MAIN CONTAINER --- */
 .main-container {
-    width: 90%;
-    max-width: 1200px;
-    /* Desktop height */
-    height: 85vh; 
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border-radius: 35px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(25px) saturate(160%);
-    -webkit-backdrop-filter: blur(25px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 1s ease;
-    visibility: hidden;
+    width: 90%; max-width: 1200px; height: 85vh; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; border-radius: 35px;
+    background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(25px) saturate(160%);
+    -webkit-backdrop-filter: blur(25px) saturate(160%); border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1); opacity: 0; transform: scale(0.9);
+    transition: all 1s ease; visibility: hidden;
 }
+.main-container.unlocked { opacity: 1; transform: scale(1); visibility: visible; }
 
-.main-container.unlocked {
-    opacity: 1;
-    transform: scale(1);
-    visibility: visible;
-}
-
-.ui-header {
-    padding: 20px 35px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 5;
-    flex-shrink: 0;
-}
-
-.badge {
-    background: rgba(255, 255, 255, 0.6);
-    padding: 8px 18px;
-    border-radius: 30px;
-    font-weight: 600;
-    color: var(--primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.music-widget {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.6);
-    padding: 5px 15px 5px 5px;
-    border-radius: 30px;
-}
-
-.music-icon {
-    width: 30px;
-    height: 30px;
-    background: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 12px;
-    animation: spin 4s linear infinite;
-}
-
+.ui-header { padding: 20px 35px; display: flex; justify-content: space-between; align-items: center; z-index: 5; flex-shrink: 0; }
+.badge { background: rgba(255, 255, 255, 0.6); padding: 8px 18px; border-radius: 30px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.music-widget { display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.6); padding: 5px 15px 5px 5px; border-radius: 30px; }
+.music-icon { width: 30px; height: 30px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; animation: spin 4s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* --- CONTENT AREA --- */
-.content-area {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    /* Penting buat Mobile: */
-    display: flex; 
-    flex-direction: column;
-}
+.content-area { flex: 1; position: relative; overflow: hidden; width: 100%; }
 
-/* --- PAGE STRUCTURE --- */
 .page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 20px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    transform: translateY(30px) scale(0.95);
-    /* Disable scroll di container page, kita pindah ke text-side */
-    overflow: hidden; 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    padding: 20px 40px; display: flex; flex-direction: column; align-items: center;
+    opacity: 0; pointer-events: none; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateY(30px) scale(0.95); overflow: hidden;
 }
+.page.active { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); z-index: 10; }
 
-.page.active {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateY(0) scale(1);
-    z-index: 10;
-}
+.split-layout { display: flex; width: 100%; height: 100%; max-width: 1100px; margin: 0 auto; gap: 40px; align-items: center; justify-content: center; }
 
-/* Layout Split */
-.split-layout {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Text Side (Scrollable) */
+/* Text Side */
 .text-side {
-    flex: 1.5;
-    padding: 40px;
-    border-radius: 10px;
-    position: relative;
-    max-height: 80%;
-    overflow-y: auto;
-    /* Smooth scroll buat iOS */
-    -webkit-overflow-scrolling: touch; 
+    flex: 1.5; padding: 40px; border-radius: 10px; position: relative; max-height: 80%;
+    overflow-y: auto; scrollbar-width: thin;
 }
-
 .text-side::-webkit-scrollbar { width: 6px; }
 .text-side::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
 /* Decorations */
 .design-tape { background: #fffdf0; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); transform: rotate(-1deg); }
-.design-tape::before {
-    content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-    width: 100px; height: 30px; background: rgba(255, 192, 203, 0.5);
-}
-
-.design-notebook {
-    background: #fff;
-    background-image: repeating-linear-gradient(transparent, transparent 31px, #e1e1e1 32px);
-    line-height: 32px;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid var(--secondary);
-    padding-top: 50px;
-}
-
-.design-card {
-    background: #fff; border: 4px double var(--primary); border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); text-align: center;
-}
+.design-tape::before { content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 100px; height: 30px; background: rgba(255, 192, 203, 0.5); }
+.design-notebook { background: #fff; background-image: repeating-linear-gradient(transparent, transparent 31px, #e1e1e1 32px); line-height: 32px; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1); border-left: 5px solid var(--secondary); padding-top: 50px; }
+.design-card { background: #fff; border: 4px double var(--primary); border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); text-align: center; }
 
 /* Fonts */
 .letter-content { font-size: 1.15rem; color: #444; text-align: justify; }
@@ -314,162 +138,126 @@ body {
 
 /* Photo */
 .photo-side { flex: 1; display: flex; justify-content: center; }
-.photo-card {
-    background: #fff; padding: 10px 10px 40px 10px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    width: 100%; max-width: 320px; border-radius: 4px;
-    transition: 0.3s;
-}
-.photo-card:hover { transform: scale(1.02); }
+.photo-card { background: #fff; padding: 10px 10px 40px 10px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); width: 100%; max-width: 320px; border-radius: 4px; transition: 0.3s; }
 .photo-card img { width: 100%; display: block; border-radius: 2px; }
 
-/* --- FINALE BOX --- */
-.finale-content-box {
-    background: rgba(255, 255, 255, 0.6);
-    padding: 30px 50px;
-    border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    margin: auto;
-    max-width: 600px;
-    max-height: 80%;
-    overflow-y: auto;
-}
+/* Finale */
+.finale-content-box { background: rgba(255, 255, 255, 0.6); padding: 30px 50px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); text-align: center; position: relative; z-index: 2; margin: auto; max-width: 600px; max-height: 80%; overflow-y: auto; }
 
-/* --- NAVIGATION --- */
-.nav-container {
-    position: absolute;
-    bottom: 30px;
-    width: 100%;
-    padding: 0 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 20;
-}
-
-.btn-nav {
-    padding: 12px 25px;
-    border-radius: 50px;
-    border: none;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
+/* Nav */
+.nav-container { position: absolute; bottom: 30px; width: 100%; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; z-index: 20; }
+.btn-nav { padding: 12px 25px; border-radius: 50px; border: none; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
 .btn-next { background: var(--primary); color: white; }
 .btn-back { background: rgba(255, 255, 255, 0.8); color: #777; }
 .btn-back.hidden { opacity: 0; pointer-events: none; }
-
 .nav-dots { display: flex; gap: 8px; }
 .dot { width: 8px; height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; transition: 0.3s; }
 .dot.active { background: var(--primary); transform: scale(1.5); }
 
-/* --- RESPONSIVE MOBILE FIX (THE REAL FIX) --- */
+/* --- 🔥 MOBILE FIX: PAS SATU LAYAR 🔥 --- */
 @media (max-width: 900px) {
-    body {
-        /* Memastikan body tidak bisa discroll sama sekali di HP */
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
+    /* 1. Reset Container biar Full Screen */
     .main-container {
         width: 100%;
-        height: 100%; /* Full screen mengikuti fixed body */
+        height: 100%; /* Full Tinggi Layar */
         border-radius: 0;
         border: none;
     }
 
-    .ui-header { 
-        padding: 15px 20px; 
-        flex-shrink: 0; 
-        height: 70px; /* Fix height biar stabil */
+    .ui-header {
+        padding: 10px 15px;
+        height: 60px; /* Header dipasin kecil */
+        flex-shrink: 0;
     }
 
-    h1 { font-size: 1.6rem; margin: 0; }
+    h1 { font-size: 1.5rem; margin: 0; }
+    .badge { padding: 5px 12px; font-size: 0.8rem; }
 
-    /* Page Setting */
+    /* 2. Page Layout Flex Column (Atas ke Bawah) */
     .page {
-        padding: 0 20px 80px 20px; /* Padding bawah buat space navigasi */
+        padding: 0 15px;
+        padding-bottom: 70px; /* Space buat Navigasi di bawah */
         display: flex;
         flex-direction: column;
-        height: 100%; /* Paksa tinggi 100% dari container */
-        overflow: hidden; /* Page utama GAK BOLEH scroll */
+        justify-content: flex-start;
+        height: 100%; /* Paksa tinggi page ngikutin layar */
+        overflow: hidden; /* Gak boleh scroll keluar */
     }
 
     .split-layout {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         height: 100%;
+        width: 100%;
         justify-content: flex-start;
+        min-height: 0; /* Magic fix buat flex scroll */
     }
 
-    /* 1. FOTO FIXED DI ATAS */
+    /* 3. FOTO: Dibatasi Tingginya (Max 35% Layar) */
     .photo-side {
         order: -1;
-        flex: 0 0 auto; /* Tinggi sesuai isi, gak melar */
+        flex: 0 0 auto; /* Gak boleh melar */
         width: 100%;
+        height: 35%; /* Cuma ambil 35% layar */
         display: flex;
         align-items: center;
         justify-content: center;
-        padding-top: 10px;
     }
 
     .photo-card {
-        max-width: 180px; /* Kecilin dikit biar muat */
-        padding: 8px 8px 25px 8px;
+        max-width: 280px;
+        max-height: 100%; /* Biar fotonya ga nabrak */
+        padding: 8px 8px 30px 8px;
         transform: rotate(-2deg);
+        display: flex;
+        align-items: center;
+    }
+    
+    .photo-card img {
+        max-height: 100%; /* Gambar ngikutin kotak */
+        object-fit: contain; /* Gambar pas */
     }
 
-    /* 2. TEKS ISI SISA RUANG (SCROLLABLE AREA) */
+    /* 4. TEKS: Mengisi Sisa Ruangan (Scrollable) */
     .text-side {
         order: 2;
-        flex: 1; /* Ambil semua sisa ruang kosong di bawah foto */
+        flex: 1; /* Ambil SEMUA sisa ruang di bawah foto */
         width: 100%;
-        min-height: 0; /* WAJIB: biar child flex bisa scroll */
         padding: 20px;
         margin: 0;
-        
-        /* INI KUNCI 1 JARI SCROLL */
-        overflow-y: auto; 
-        overscroll-behavior: contain; /* Biar scroll gak mental ke body */
-        touch-action: pan-y; /* HP tau ini area swipe vertikal */
+        overflow-y: auto; /* SCROLL DI SINI */
+        border-radius: 15px;
+        background: #fff; /* Biar kebaca jelas */
     }
 
-    /* FIX HALAMAN FINAL (KUE) */
-    .finale-content-box {
-        width: 100%;
-        max-height: 100%;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        margin: auto;
-        padding: 20px;
+    .design-card {
+        border-radius: 15px;
+        border: 2px double var(--primary); /* Border ditipisin dikit di HP */
     }
-    .finale-content-box h2 { font-size: 1.3rem; }
 
-    /* Navigasi */
+    /* 5. Navigasi: Pasti di Bawah */
     .nav-container {
         position: absolute;
-        bottom: 20px;
+        bottom: 15px;
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
-        background: rgba(255, 255, 255, 0.8); /* Lebih solid dikit biar kebaca */
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(10px);
-        padding: 10px 15px;
         border-radius: 50px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         z-index: 50;
+    }
+
+    .btn-nav { padding: 10px 20px; font-size: 0.9rem; }
+    
+    /* Fix Finale Box Mobile */
+    .finale-content-box {
+        width: 100%;
+        max-height: 100%;
+        padding: 20px;
+        overflow-y: auto;
     }
 }
 
