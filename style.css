@@ -1,4 +1,4 @@
-/* style.css */
+/* style.css - FIXED MOBILE SCROLL VERSION */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;500;600&family=Delius&family=Indie+Flower&display=swap');
 
 :root {
@@ -12,15 +12,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Mencegah highlight biru saat tap di mobile */
+    -webkit-tap-highlight-color: transparent; 
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     background: var(--bg-pink-soft);
-    height: 100vh;
-    height: 100dvh; /* Kunci ukuran layar */
-    width: 100vw;
-    overflow: hidden; /* Gak ada scroll body */
+    /* KUNCI ANTI SCROLL 2 JARI: */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
     color: var(--text-main);
     display: flex;
     justify-content: center;
@@ -149,8 +154,8 @@ body {
 .main-container {
     width: 90%;
     max-width: 1200px;
-    height: 85vh;
-    height: 85dvh;
+    /* Desktop height */
+    height: 85vh; 
     position: relative;
     overflow: hidden;
     display: flex;
@@ -222,10 +227,12 @@ body {
     flex: 1;
     position: relative;
     overflow: hidden;
-    /* Container buat halaman-halaman */
+    /* Penting buat Mobile: */
+    display: flex; 
+    flex-direction: column;
 }
 
-/* --- PAGE STYLE --- */
+/* --- PAGE STRUCTURE --- */
 .page {
     position: absolute;
     top: 0;
@@ -240,7 +247,8 @@ body {
     pointer-events: none;
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     transform: translateY(30px) scale(0.95);
-    overflow: hidden; /* Page utama gak boleh scroll, konten dalemnya yg scroll */
+    /* Disable scroll di container page, kita pindah ke text-side */
+    overflow: hidden; 
 }
 
 .page.active {
@@ -254,7 +262,7 @@ body {
 .split-layout {
     display: flex;
     width: 100%;
-    height: 100%; /* Full height of page */
+    height: 100%;
     max-width: 1100px;
     margin: 0 auto;
     gap: 40px;
@@ -262,14 +270,16 @@ body {
     justify-content: center;
 }
 
-/* Text Side (Scrollable Area) */
+/* Text Side (Scrollable) */
 .text-side {
     flex: 1.5;
     padding: 40px;
     border-radius: 10px;
     position: relative;
-    max-height: 80%; /* Batas tinggi di desktop */
-    overflow-y: auto; /* Scroll aktif di sini */
+    max-height: 80%;
+    overflow-y: auto;
+    /* Smooth scroll buat iOS */
+    -webkit-overflow-scrolling: touch; 
 }
 
 .text-side::-webkit-scrollbar { width: 6px; }
@@ -313,7 +323,7 @@ body {
 .photo-card:hover { transform: scale(1.02); }
 .photo-card img { width: 100%; display: block; border-radius: 2px; }
 
-/* --- FINALE BOX (Kue) --- */
+/* --- FINALE BOX --- */
 .finale-content-box {
     background: rgba(255, 255, 255, 0.6);
     padding: 30px 50px;
@@ -325,8 +335,8 @@ body {
     z-index: 2;
     margin: auto;
     max-width: 600px;
-    max-height: 80%; /* Biar gak bablas di desktop */
-    overflow-y: auto; /* Biar isinya bisa discroll */
+    max-height: 80%;
+    overflow-y: auto;
 }
 
 /* --- NAVIGATION --- */
@@ -363,90 +373,103 @@ body {
 .dot { width: 8px; height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; transition: 0.3s; }
 .dot.active { background: var(--primary); transform: scale(1.5); }
 
-/* --- RESPONSIVE MOBILE FIX (Strict Viewport) --- */
+/* --- RESPONSIVE MOBILE FIX (THE REAL FIX) --- */
 @media (max-width: 900px) {
-    /* 1. Main Container: Pas Layar HP */
+    body {
+        /* Memastikan body tidak bisa discroll sama sekali di HP */
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
     .main-container {
         width: 100%;
-        height: 100dvh; /* Tinggi pas layar */
+        height: 100%; /* Full screen mengikuti fixed body */
         border-radius: 0;
         border: none;
-        overflow: hidden; /* Gak ada scroll keluar */
     }
 
-    .ui-header { padding: 10px 20px; flex-shrink: 0; }
-    h1 { font-size: 1.8rem; margin-bottom: 5px; }
+    .ui-header { 
+        padding: 15px 20px; 
+        flex-shrink: 0; 
+        height: 70px; /* Fix height biar stabil */
+    }
 
-    /* 2. Page: Flex Column, Gak bisa scroll body-nya */
+    h1 { font-size: 1.6rem; margin: 0; }
+
+    /* Page Setting */
     .page {
-        padding: 10px 20px 80px 20px; /* Bawahnya kasih space buat nav */
+        padding: 0 20px 80px 20px; /* Padding bawah buat space navigasi */
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        overflow: hidden; /* KUNCI: Page gak scroll */
-        height: 100%;
+        height: 100%; /* Paksa tinggi 100% dari container */
+        overflow: hidden; /* Page utama GAK BOLEH scroll */
     }
 
-    /* 3. Split Layout: Flex Column, menuhin page */
     .split-layout {
         flex-direction: column;
         gap: 15px;
         height: 100%;
         justify-content: flex-start;
-        overflow: hidden; /* Safety */
     }
 
-    /* 4. Foto: Di atas, Ukuran Fixed (gak nambah tinggi) */
+    /* 1. FOTO FIXED DI ATAS */
     .photo-side {
         order: -1;
-        flex: 0 0 auto; /* Gak boleh melar, sesuai konten aja */
+        flex: 0 0 auto; /* Tinggi sesuai isi, gak melar */
         width: 100%;
-        max-height: 40%; /* Maksimal makan 40% layar */
         display: flex;
         align-items: center;
+        justify-content: center;
+        padding-top: 10px;
     }
 
     .photo-card {
-        max-width: 200px; /* Foto dikecilin dikit biar muat */
-        padding: 8px 8px 30px 8px;
+        max-width: 180px; /* Kecilin dikit biar muat */
+        padding: 8px 8px 25px 8px;
         transform: rotate(-2deg);
     }
 
-    /* 5. Teks: Isi sisa ruang, SCROLL DI SINI */
+    /* 2. TEKS ISI SISA RUANG (SCROLLABLE AREA) */
     .text-side {
         order: 2;
+        flex: 1; /* Ambil semua sisa ruang kosong di bawah foto */
         width: 100%;
-        flex: 1; /* Ambil sisa ruang di bawah foto */
-        min-height: 0; /* Penting buat nested flex scroll */
-        max-height: none; /* Reset constraint desktop */
+        min-height: 0; /* WAJIB: biar child flex bisa scroll */
         padding: 20px;
-        margin-bottom: 0;
-        overflow-y: auto; /* INI DIA: Scroll cuma di dalam kotak teks */
+        margin: 0;
+        
+        /* INI KUNCI 1 JARI SCROLL */
+        overflow-y: auto; 
+        overscroll-behavior: contain; /* Biar scroll gak mental ke body */
+        touch-action: pan-y; /* HP tau ini area swipe vertikal */
     }
 
-    /* 6. Finale Box (Kue) Fix */
+    /* FIX HALAMAN FINAL (KUE) */
     .finale-content-box {
         width: 100%;
-        max-height: 80%; /* Biar gak ketutup header/nav */
-        padding: 25px 20px;
-        margin: auto; /* Auto margin biar di tengah vertikal/horizontal flex */
-        overflow-y: auto; /* Kalau isinya banyak, scroll di dalam box */
+        max-height: 100%;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        margin: auto;
+        padding: 20px;
     }
-    
-    .finale-content-box h2 { font-size: 1.4rem; }
-    .finale-content-box p { font-size: 0.9rem; }
+    .finale-content-box h2 { font-size: 1.3rem; }
 
     /* Navigasi */
     .nav-container {
-        padding: 10px 20px;
-        bottom: 15px;
-        width: 90%;
+        position: absolute;
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background: rgba(255, 255, 255, 0.3);
+        width: 90%;
+        background: rgba(255, 255, 255, 0.8); /* Lebih solid dikit biar kebaca */
         backdrop-filter: blur(10px);
+        padding: 10px 15px;
         border-radius: 50px;
-        border: 1px solid rgba(255,255,255,0.4);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        z-index: 50;
     }
 }
 
