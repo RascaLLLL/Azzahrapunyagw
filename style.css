@@ -18,14 +18,16 @@ body {
     font-family: 'Poppins', sans-serif;
     background: var(--bg-pink-soft);
     height: 100vh;
+    height: 100dvh; /* Kunci ukuran layar */
     width: 100vw;
-    overflow: hidden;
+    overflow: hidden; /* Gak ada scroll body */
     color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* --- BACKGROUND DECORATION --- */
 .bg-doodles {
     position: fixed;
     top: 0;
@@ -66,48 +68,21 @@ body {
     animation: moveBlob 20s infinite alternate;
 }
 
-.b1 {
-    width: 400px;
-    height: 400px;
-    background: #ffc3a0;
-    top: -100px;
-    left: -100px;
-}
-
-.b2 {
-    width: 350px;
-    height: 350px;
-    background: #ffafbd;
-    bottom: -50px;
-    right: -50px;
-}
+.b1 { width: 400px; height: 400px; background: #ffc3a0; top: -100px; left: -100px; }
+.b2 { width: 350px; height: 350px; background: #ffafbd; bottom: -50px; right: -50px; }
 
 @keyframes moveBlob {
-    from {
-        transform: translate(0, 0);
-    }
-
-    to {
-        transform: translate(30px, 50px);
-    }
+    from { transform: translate(0, 0); }
+    to { transform: translate(30px, 50px); }
 }
 
 @keyframes floatUp {
-    0% {
-        transform: translateY(100vh) scale(0);
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: translateY(-10vh) scale(1);
-        opacity: 0;
-    }
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
 }
 
+/* --- LOGIN SYSTEM --- */
 #login-overlay {
     position: fixed;
     top: 0;
@@ -159,35 +134,23 @@ body {
     transition: 0.3s;
 }
 
-.btn-unlock:hover {
-    transform: scale(1.05);
-}
-
 .shake {
     animation: shake 0.3s ease-in-out;
     border-color: red !important;
 }
 
 @keyframes shake {
-    0%,
-    100% {
-        transform: translateX(0); 
-    }
-
-    25%,
-    75% {
-        transform: translateX(-10px); 
-    }
-
-    50% {
-        transform: translateX(10px); 
-    }
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
 }
 
+/* --- MAIN CONTAINER (GLASS) --- */
 .main-container {
     width: 90%;
     max-width: 1200px;
-    height: 90vh;
+    height: 85vh;
+    height: 85dvh;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -216,6 +179,7 @@ body {
     justify-content: space-between;
     align-items: center;
     z-index: 5;
+    flex-shrink: 0;
 }
 
 .badge {
@@ -251,25 +215,24 @@ body {
     animation: spin 4s linear infinite;
 }
 
-@keyframes spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
+/* --- CONTENT AREA --- */
 .content-area {
     flex: 1;
     position: relative;
     overflow: hidden;
+    /* Container buat halaman-halaman */
 }
 
+/* --- PAGE STYLE --- */
 .page {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 20px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -277,7 +240,7 @@ body {
     pointer-events: none;
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     transform: translateY(30px) scale(0.95);
-    overflow-y: auto;
+    overflow: hidden; /* Page utama gak boleh scroll, konten dalemnya yg scroll */
 }
 
 .page.active {
@@ -287,14 +250,11 @@ body {
     z-index: 10;
 }
 
-.page::-webkit-scrollbar {
-    width: 0;
-}
-
+/* Layout Split */
 .split-layout {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100%; /* Full height of page */
     max-width: 1100px;
     margin: 0 auto;
     gap: 40px;
@@ -302,43 +262,24 @@ body {
     justify-content: center;
 }
 
-
+/* Text Side (Scrollable Area) */
 .text-side {
     flex: 1.5;
     padding: 40px;
     border-radius: 10px;
     position: relative;
-    max-height: 80%;
-    overflow-y: auto;
-    transition: all 0.3s;
+    max-height: 80%; /* Batas tinggi di desktop */
+    overflow-y: auto; /* Scroll aktif di sini */
 }
 
-.text-side::-webkit-scrollbar {
-    width: 6px;
-}
+.text-side::-webkit-scrollbar { width: 6px; }
+.text-side::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
-.text-side::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.design-tape {
-    background: #fffdf0;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-    transform: rotate(-1deg);
-}
-
+/* Decorations */
+.design-tape { background: #fffdf0; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); transform: rotate(-1deg); }
 .design-tape::before {
-    content: '';
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 30px;
-    background: rgba(255, 192, 203, 0.5);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transform: rotate(-2deg);
+    content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+    width: 100px; height: 30px; background: rgba(255, 192, 203, 0.5);
 }
 
 .design-notebook {
@@ -350,85 +291,29 @@ body {
     padding-top: 50px;
 }
 
-.design-notebook::after {
-    content: '● ● ●';
-    color: #ddd;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 20px;
-    letter-spacing: 15px;
-}
-
 .design-card {
-    background: #fff;
-    border: 4px double var(--primary);
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    text-align: center;
+    background: #fff; border: 4px double var(--primary); border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); text-align: center;
 }
 
-.design-card::before {
-    content: '💌';
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 10px;
-}
+/* Fonts */
+.letter-content { font-size: 1.15rem; color: #444; text-align: justify; }
+.design-tape .letter-content { font-family: 'Indie Flower', cursive; font-weight: 600; }
+.design-notebook .letter-content { font-family: 'Delius', cursive; }
+.letter-content p { margin-bottom: 20px; }
 
-/* Font Styles */
-.letter-content {
-    font-size: 1.15rem;
-    color: #444;
-    text-align: justify;
-}
-
-.design-tape .letter-content {
-    font-family: 'Indie Flower', cursive;
-    font-weight: 600;
-}
-
-.design-notebook .letter-content {
-    font-family: 'Delius', cursive;
-}
-
-.design-card .letter-content {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-}
-
-.letter-content p {
-    margin-bottom: 20px;
-}
-
-/* --- FOTO --- */
-.photo-side {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
+/* Photo */
+.photo-side { flex: 1; display: flex; justify-content: center; }
 .photo-card {
-    background: #fff;
-    padding: 10px 10px 40px 10px;
+    background: #fff; padding: 10px 10px 40px 10px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 320px;
-    border-radius: 4px;
+    width: 100%; max-width: 320px; border-radius: 4px;
     transition: 0.3s;
 }
+.photo-card:hover { transform: scale(1.02); }
+.photo-card img { width: 100%; display: block; border-radius: 2px; }
 
-.photo-card:hover {
-    transform: scale(1.02) rotate(0deg) !important;
-    z-index: 5;
-}
-
-.photo-card img {
-    width: 100%;
-    display: block;
-    border-radius: 2px;
-}
-
-/* --- FINALE --- */
+/* --- FINALE BOX (Kue) --- */
 .finale-content-box {
     background: rgba(255, 255, 255, 0.6);
     padding: 30px 50px;
@@ -439,9 +324,12 @@ body {
     position: relative;
     z-index: 2;
     margin: auto;
+    max-width: 600px;
+    max-height: 80%; /* Biar gak bablas di desktop */
+    overflow-y: auto; /* Biar isinya bisa discroll */
 }
 
-/* --- NAV --- */
+/* --- NAVIGATION --- */
 .nav-container {
     position: absolute;
     bottom: 30px;
@@ -460,80 +348,105 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: 0.3s;
     display: flex;
     align-items: center;
     gap: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.btn-next {
-    background: var(--primary);
-    color: white;
-}
+.btn-next { background: var(--primary); color: white; }
+.btn-back { background: rgba(255, 255, 255, 0.8); color: #777; }
+.btn-back.hidden { opacity: 0; pointer-events: none; }
 
-.btn-back {
-    background: rgba(255, 255, 255, 0.8);
-    color: #777;
-}
+.nav-dots { display: flex; gap: 8px; }
+.dot { width: 8px; height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; transition: 0.3s; }
+.dot.active { background: var(--primary); transform: scale(1.5); }
 
-.btn-back.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.nav-dots {
-    display: flex;
-    gap: 8px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-    transition: 0.3s;
-}
-
-.dot.active {
-    background: var(--primary);
-    transform: scale(1.5);
-}
-
-/* Responsive */
+/* --- RESPONSIVE MOBILE FIX (Strict Viewport) --- */
 @media (max-width: 900px) {
+    /* 1. Main Container: Pas Layar HP */
     .main-container {
         width: 100%;
-        height: 100%;
+        height: 100dvh; /* Tinggi pas layar */
         border-radius: 0;
         border: none;
+        overflow: hidden; /* Gak ada scroll keluar */
     }
 
+    .ui-header { padding: 10px 20px; flex-shrink: 0; }
+    h1 { font-size: 1.8rem; margin-bottom: 5px; }
+
+    /* 2. Page: Flex Column, Gak bisa scroll body-nya */
+    .page {
+        padding: 10px 20px 80px 20px; /* Bawahnya kasih space buat nav */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow: hidden; /* KUNCI: Page gak scroll */
+        height: 100%;
+    }
+
+    /* 3. Split Layout: Flex Column, menuhin page */
     .split-layout {
-        flex-direction: column-reverse;
-        gap: 20px;
-        padding-bottom: 80px;
+        flex-direction: column;
+        gap: 15px;
+        height: 100%;
+        justify-content: flex-start;
+        overflow: hidden; /* Safety */
     }
 
-    .text-side {
+    /* 4. Foto: Di atas, Ukuran Fixed (gak nambah tinggi) */
+    .photo-side {
+        order: -1;
+        flex: 0 0 auto; /* Gak boleh melar, sesuai konten aja */
         width: 100%;
-        padding: 25px;
-        border-radius: 15px;
+        max-height: 40%; /* Maksimal makan 40% layar */
+        display: flex;
+        align-items: center;
     }
 
+    .photo-card {
+        max-width: 200px; /* Foto dikecilin dikit biar muat */
+        padding: 8px 8px 30px 8px;
+        transform: rotate(-2deg);
+    }
+
+    /* 5. Teks: Isi sisa ruang, SCROLL DI SINI */
+    .text-side {
+        order: 2;
+        width: 100%;
+        flex: 1; /* Ambil sisa ruang di bawah foto */
+        min-height: 0; /* Penting buat nested flex scroll */
+        max-height: none; /* Reset constraint desktop */
+        padding: 20px;
+        margin-bottom: 0;
+        overflow-y: auto; /* INI DIA: Scroll cuma di dalam kotak teks */
+    }
+
+    /* 6. Finale Box (Kue) Fix */
+    .finale-content-box {
+        width: 100%;
+        max-height: 80%; /* Biar gak ketutup header/nav */
+        padding: 25px 20px;
+        margin: auto; /* Auto margin biar di tengah vertikal/horizontal flex */
+        overflow-y: auto; /* Kalau isinya banyak, scroll di dalam box */
+    }
+    
+    .finale-content-box h2 { font-size: 1.4rem; }
+    .finale-content-box p { font-size: 0.9rem; }
+
+    /* Navigasi */
     .nav-container {
-        padding: 0 20px;
-        bottom: 20px;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    .design-notebook {
-        background-image: none;
-        border-left: 3px solid var(--secondary);
-        padding-top: 20px;
+        padding: 10px 20px;
+        bottom: 15px;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,0.4);
     }
 }
 
@@ -542,13 +455,4 @@ h1 {
     color: var(--primary);
     margin-bottom: 15px;
     font-size: 2.8rem;
-}
-
-#flower-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
 }
